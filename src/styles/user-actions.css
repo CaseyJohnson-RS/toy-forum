@@ -1,0 +1,96 @@
+/* user-actions.css — стили для страницы активности пользователей */
+
+.user-actions-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: #343541;
+  padding: 32px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px #0002;
+}
+.user-actions-title {
+  margin-bottom: 18px;
+  color: #ececf1;
+  text-align: center;
+}
+.user-actions-filter-group {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+.user-actions-input {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1.5px solid #444654;
+  background: #23272f;
+  color: #ececf1;
+  font-size: 1em;
+  outline: none;
+  transition: border 0.2s;
+  display: block;
+}
+.user-actions-autocomplete {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: #23272f;
+  border: 1px solid #444654;
+  border-radius: 0 0 8px 8px;
+  z-index: 10;
+  max-height: 160px;
+  overflow-y: auto;
+  box-shadow: 0 2px 8px #0002;
+}
+.user-actions-autocomplete-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  color: #4f8cff;
+}
+.user-actions-btn {
+  padding: 8px 18px;
+  border-radius: 8px;
+  border: none;
+  background: #4f8cff;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1em;
+  cursor: pointer;
+}
+.user-actions-btn.export {
+  background: #43a047;
+  margin-left: auto;
+}
+.user-actions-logs {
+  max-height: 340px;
+  min-height: 120px;
+  overflow-y: auto;
+  background: #23272f;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px #0002;
+  margin-top: 16px;
+  padding: 12px 18px;
+  list-style: none;
+  color: #ececf1;
+  font-size: 1em;
+}
+.user-actions-log-item {
+  border-bottom: 1px solid #343541;
+  padding: 6px 0;
+}
+.user-actions-log-time {
+  color: #b0b0b0;
+  font-size: 0.93em;
+  margin-right: 8px;
+}
+.user-actions-log-user {
+  color: #4f8cff;
+  font-weight: bold;
+}
+.user-actions-log-action {
+  color: #ffe066;
+}

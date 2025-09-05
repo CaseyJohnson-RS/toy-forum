@@ -1,0 +1,82 @@
+/* forum.css — стили для компонентов форума */
+
+.forum-message {
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+  padding: 0 10px;
+  opacity: 1;
+}
+.forum-message.own {
+  justify-content: flex-end;
+  text-align: right;
+}
+.forum-message.hidden {
+  opacity: 0.5;
+}
+.forum-bubble {
+  background: linear-gradient(135deg, #393e46 60%, #23272f 100%);
+  color: #e0e0e0;
+  border-radius: 18px 18px 18px 4px;
+  margin-right: auto;
+  width: fit-content;
+  max-width: 80%;
+  padding: 10px 16px 8px 16px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  position: relative;
+}
+.forum-bubble.own {
+  background: linear-gradient(135deg, #a259ff 60%, #6a82fb 100%);
+  color: #fff;
+  border-radius: 18px 18px 4px 18px;
+  margin-left: auto;
+  margin-right: 0;
+}
+.forum-author {
+  font-size: 0.95em;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #bdbdbd;
+}
+.forum-author.own {
+  color: #e3f2fd;
+}
+.forum-text {
+  word-break: break-word;
+  font-size: 1.08em;
+  margin-bottom: 4px;
+}
+.forum-meta {
+  font-size: 0.8em;
+  color: #b0b0b0;
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.forum-meta.own {
+  color: #6a3fa0;
+}
+.forum-btn {
+  margin-left: 8px;
+  font-size: 0.8em;
+  background: none;
+  border: none;
+  color: #4f8cff;
+  cursor: pointer;
+}
+.forum-btn.show { color: #43a047; }
+.forum-btn.hide { color: #ffb300; }
+.forum-btn.save {
+  background: #4f8cff;
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 10px;
+}
+.forum-btn.cancel {
+  background: #393e46;
+  color: #fff;
+  border-radius: 6px;
+  padding: 4px 10px;
+  margin-left: 4px;
+}

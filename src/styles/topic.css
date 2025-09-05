@@ -1,0 +1,19 @@
+/* topic.css — стили для заголовка и панели обсуждения */
+
+.topic-header {
+  margin-bottom: 4px;
+  text-align: center;
+}
+.topic-description {
+  font-size: 1em;
+  color: #b0b0b0;
+  text-align: center;
+  margin-bottom: 8px;
+  margin-top: 2px;
+}
+.topic-count {
+  font-size: 0.95em;
+  color: #b0b0b0;
+  text-align: center;
+  margin-bottom: 18px;
+}
