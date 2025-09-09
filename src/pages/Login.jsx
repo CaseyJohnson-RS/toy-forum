@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { loginUser } from '../server';
-import '../styles/common.css';
 
 export default function Login({ onLoggedIn }) {
   const [username, setUsername] = useState('');

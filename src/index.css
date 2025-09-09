@@ -66,3 +66,40 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+
+
+input {
+    width: 100%;
+    padding:12px 16px;
+    border-radius:8px;
+    border:2px solid #444654;
+    background:#23272f;
+    color: #ececf1;
+    font-size:1em;
+    outline: none;
+    margin-bottom:4px; 
+    transition:border 0.2s;
+}
+
+button {
+    padding:12px 32px;
+    border-radius:8px;
+    border:none;
+    color: white;
+    font-weight:600;
+    font-size:1em;
+    cursor:pointer;
+    min-height:40px;
+    margin:0 auto;
+    display:block;
+}
+
+button.submit {
+    background:#4f8cff;
+}
+
+button.nav {
+    background:#1a1a1a;
+    width: 100%;
+}
