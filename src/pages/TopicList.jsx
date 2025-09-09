@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import { getTopics, getRandomTopics, getMessages } from '../server';
 
 export default function TopicList({ onSelectTopic }) {
@@ -46,54 +46,29 @@ export default function TopicList({ onSelectTopic }) {
 
   return (
     <>
-      <div style={{width:'100%', maxWidth:600, margin:'0 auto', marginBottom:18, minHeight:90, display:'flex', flexDirection:'column', justifyContent:'flex-end'}}>
-        <h2 style={{marginTop:0, marginBottom:12, textAlign:'center', fontWeight:700}}>Поиск обсуждений</h2>
-        <div style={{width:'100%', display:'flex', justifyContent:'center'}}>
+      <div>
+        <h2 style={{textAlign:'center'}}>Поиск обсуждений</h2>
+        <div style={{display:'block', margin: 'auto 5%'}}>
           <input
             placeholder="Запрос"
             value={search}
             onChange={e => setSearch(e.target.value)}
             disabled={loading}
-            style={{
-              width:'100%',
-              maxWidth:600,
-              padding:'12px 18px',
-              borderRadius: '8px',
-              border: '1.5px solid #444654',
-              background:'#23272f',
-              color:'#ececf1',
-              fontSize:'1em',
-              outline:'none',
-              transition:'border 0.2s',
-            }}
           />
         </div>
       </div>
-      {loading && <div style={{color:'gray'}}>Загрузка...</div>}
-      {error && <div style={{color:'red'}}>{error}</div>}
+      {loading && <div style={{color:'gray', display:'block', textAlign:'center', margin: '5%'}}>Загрузка...</div>}
+      {error && <div style={{color:'red', display:'block', textAlign:'center', margin: '5%'}}>{error}</div>}
       {!loading && (
-        <ul
-          style={{
-            maxWidth: 600,
-            margin: '0 auto',
-            padding: 0,
-            listStyle: 'none',
-            maxHeight: 10 * 48 + 8, // 10 тем по 48px + небольшой запас
-            minHeight: 10 * 48,
-            overflowY: 'auto',
-            background: 'rgba(35,39,47,0.95)',
-            borderRadius: 10,
-            boxShadow: '0 2px 8px #0002',
-          }}
-        >
+        <ul class='topic-list'>
           {displayTopics.map(t => (
-            <li key={t.id} style={{padding:'10px 12px', borderBottom:'1px solid #343541', display:'flex', flexDirection:'column', minHeight: 48}}>
+            <li key={t.id} style={{padding:'10px', borderBottom:'1px solid #454755ff', display:'block', minHeight: 48}}>
               <div style={{display:'flex', alignItems:'center'}}>
                 <div style={{display:'flex', flexDirection:'column', flex:1}}>
-                  <button onClick={() => onSelectTopic(t.id)} disabled={loading} style={{background:'none', border:'none', color:'#4f8cff', fontWeight:600, fontSize:'1em', cursor:'pointer', textAlign:'left', padding:0}}>{t.title}</button>
-                  {t.description && <span style={{color:'#b0b0b0', fontSize:'0.93em', fontStyle:'italic', marginTop:1, marginLeft:2}}>{t.description}</span>}
+                  <button onClick={() => onSelectTopic(t.id)} disabled={loading} class='topic-header'>{t.title}</button>
+                  {t.description && <span style={{color:'grey', fontSize:'0.9em', fontStyle:'italic'}}>{t.description}</span>}
                 </div>
-                <span style={{color:'gray', marginLeft:8, fontSize:'0.95em'}}>{messagesCount[t.id] ?? '...'} сообщений</span>
+                <span style={{color:'grey', marginLeft:8, fontSize:'0.9em'}}>{messagesCount[t.id] ?? '...'} сообщений</span>
               </div>
             </li>
           ))}

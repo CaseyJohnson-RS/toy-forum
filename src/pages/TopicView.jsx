@@ -7,11 +7,10 @@ import { getTopics } from '../server';
 
 export default function TopicView({ topicId, onTopicDeleted }) {
   const [messages, setMessages] = useState([]);
-  const [showHidden, setShowHidden] = useState(false);
   const [topicTitle, setTopicTitle] = useState('');
   const [topicDescription, setTopicDescription] = useState('');
-  const [filter, setFilter] = useState(''); // текущее значение в поле
-  const [appliedFilter, setAppliedFilter] = useState(''); // применённый фильтр
+  const [filter, setFilter] = useState('');
+  const [appliedFilter, setAppliedFilter] = useState('');
   const [text, setText] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -70,8 +69,6 @@ export default function TopicView({ topicId, onTopicDeleted }) {
       setLoading(false);
     }
   };
-
-
 
   const handleSend = async () => {
     if (text) {
@@ -157,25 +154,12 @@ export default function TopicView({ topicId, onTopicDeleted }) {
 
   return (
     <div style={{position:'relative'}}>
-      {/* Кнопка удаления для администратора */}
+      {/* Кнопка удаления администратора (лол тип)*/}
       {user && isAdmin(user) && (
         <button
           onClick={handleDeleteTopic}
           disabled={deleting}
-          style={{
-            position:'absolute',
-            top:8,
-            right:8,
-            background:'#e53935',
-            color:'#fff',
-            border:'none',
-            borderRadius:8,
-            padding:'8px 18px',
-            fontWeight:600,
-            fontSize:'1em',
-            cursor:'pointer',
-            zIndex:2
-          }}
+          style={{ background:'#853231' }}
         >
           Удалить обсуждение
         </button>
@@ -188,50 +172,16 @@ export default function TopicView({ topicId, onTopicDeleted }) {
           value={filter}
           onChange={e => setFilter(e.target.value)}
           disabled={loading}
-          style={{
-            flex:1,
-            minWidth:0,
-            maxWidth:400,
-            padding:'10px 16px',
-            borderRadius: '8px',
-            border: '1.5px solid #444654',
-            background:'#181a20',
-            color:'#ececf1',
-            fontSize:'1em',
-            outline:'none',
-            transition:'border 0.2s',
-          }}
         />
-        <button type="submit" disabled={loading || (!filter && !appliedFilter)} style={{padding:'10px 18px', borderRadius:8, border:'none', background:'#4f8cff', color:'#fff', fontWeight:600, cursor:'pointer'}}>Найти</button>
-        <button type="button" onClick={handleResetFilter} disabled={loading || (!filter && !appliedFilter)} style={{padding:'10px 18px', borderRadius:8, border:'none', background:'#393e46', color:'#fff', fontWeight:600, cursor:'pointer'}}>Сбросить</button>
+        <button type="submit" disabled={loading || (!filter && !appliedFilter)} class='submit'>Найти</button>
+        <button type="button" onClick={handleResetFilter} disabled={loading || (!filter && !appliedFilter)} >Сбросить</button>
       </form>
       {loading && <div style={{color:'gray'}}>Загрузка...</div>}
       {error && <div style={{color:'red'}}>{error}</div>}
-      <div style={{position:'relative', display:'flex', justifyContent:'center', width:'100%'}}>
+      <div style={{justifyContent:'center', width:'100%'}}>
         <ul
           ref={messagesListRef}
-          style={{
-            width:'100%',
-            maxWidth:'900px',
-            minWidth:'350px',
-            minHeight:'300px',
-            maxHeight:'500px',
-            margin:'0 auto',
-            overflowY:'scroll',
-            display:'flex',
-            flexDirection:'column',
-            gap:'0.5em',
-            alignItems:'stretch',
-            background:'#181a20',
-            borderRadius:'16px',
-            padding:'1.5em 0',
-            boxSizing:'border-box',
-            scrollBehavior:'smooth',
-            scrollbarWidth: 'none', // Firefox
-            msOverflowStyle: 'none', // IE 10+
-          }}
-          className="hide-scrollbar-forum"
-/* ВНИМАНИЕ: Стили для hide-scrollbar-forum должны быть в App.css */
+          class='message-list hide-scrollbar-forum'
         >
           {messages.map(m => {
             const isOwn = user && m.author === user.username;
@@ -255,14 +205,14 @@ export default function TopicView({ topicId, onTopicDeleted }) {
             );
           })}
         </ul>
-        {/* Кнопки прокрутки */}
+
         {showScrollTop && (
           <button
             onClick={() => {
               messagesListRef.current.scrollTo({ top: 0, behavior: 'smooth' });
             }}
             style={{
-              position:'absolute', left:10, top:10, zIndex:10, background:'#343541cc', color:'#fff', border:'none', borderRadius:'50%', width:36, height:36, cursor:'pointer', boxShadow:'0 2px 8px #0004', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.3em', transition:'background 0.2s',
+              position:'absolute', left:-30, top:250, background:'#40414aff', color:'white', borderRadius:'20%', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.5em',
             }}
             aria-label="Прокрутить вверх"
           >↑</button>
@@ -274,7 +224,7 @@ export default function TopicView({ topicId, onTopicDeleted }) {
               el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
             }}
             style={{
-              position:'absolute', left:10, bottom:10, zIndex:10, background:'#343541cc', color:'#fff', border:'none', borderRadius:'50%', width:36, height:36, cursor:'pointer', boxShadow:'0 2px 8px #0004', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.3em', transition:'background 0.2s',
+              position:'absolute', left:-30, bottom:100, background:'#40414aff', color:'white', borderRadius:'20%', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.5em',
             }}
             aria-label="Прокрутить вниз"
           >↓</button>
@@ -284,48 +234,20 @@ export default function TopicView({ topicId, onTopicDeleted }) {
         <textarea
           ref={textareaRef}
           value={text}
-          onChange={e => {
-            setText(e.target.value);
-            const ta = textareaRef.current;
-            if (ta) {
-              ta.style.height = 'auto';
-              const maxRows = 5;
-              const lineHeight = 18; // px, примерно для fontSize 1em
-              const maxHeight = maxRows * lineHeight;
-              console.log(ta.scrollHeight);
-              
-              ta.style.height = Math.min(ta.scrollHeight, maxHeight) + 'px';
-            }
-          }}
+          onChange={e => { setText(e.target.value); }}
           placeholder="Введите сообщение..."
           disabled={loading || sending}
           rows={1}
           style={{
-            flex:1,
-            height: 60,
-            minWidth:0,
-            maxWidth:600,
-            minHeight:40,
-            maxHeight:120,
-            padding:'10px 16px',
-            borderRadius: '8px',
-            border: '1.5px solid #444654',
-            background:'#181a20',
-            color:'#ececf1',
-            fontSize:'1em',
-            outline:'none',
-            resize:'none',
-            transition:'border 0.2s',
-            scrollbarWidth: 'none', // Firefox
-            msOverflowStyle: 'none', // IE 10+
-            overflowY: 'auto',
+            height: 30,
+            resize:'none'
           }}
           className="hide-scrollbar"
         />
         <button
           onClick={handleSend}
           disabled={loading || sending || !text}
-          style={{padding:'12px 22px', borderRadius:8, border:'none', background:'#4f8cff', color:'#fff', fontWeight:600, fontSize:'1em', cursor:'pointer', minHeight:40}}
+          className='submit'
         >Отправить</button>
       </div>
     </div>
