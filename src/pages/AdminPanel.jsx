@@ -16,7 +16,7 @@ export default function AdminPanel() {
     getAllUsers().then(u => setUsers(u));
   }, []);
 
-  const handleChange = async () => {
+  const handleChangePass = async () => {
     if (!selected || !password) {
       setMsg('Выберите пользователя и введите новый пароль');
       return;
@@ -49,7 +49,7 @@ export default function AdminPanel() {
             setSelected(e.target.value);
           }}
           onFocus={() => setShowAutocomplete(true)}
-          onBlur={() => setTimeout(() => setShowAutocomplete(false), 100)}
+          onBlur={() => setShowAutocomplete(false)}
           className="admin-panel-input"
           autoComplete="off"
         />
@@ -80,14 +80,14 @@ export default function AdminPanel() {
         />
       </div>
       <button
-        onClick={handleChange}
-        disabled={loading || !selected || !password}
+        onClick={handleChangePass}
+        disabled={loading}
         className="admin-panel-btn"
       >
         Сменить пароль
       </button>
       {msg && (
-        <div className={`admin-panel-msg${msg === 'Пароль успешно изменён' ? ' success' : ' error'}`}>{msg}</div>
+        <div className={`admin-panel-msg ${msg === 'Пароль успешно изменён' ? 'success' : 'error'}`}>{msg}</div>
       )}
     </div>
   );

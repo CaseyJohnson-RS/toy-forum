@@ -5,7 +5,6 @@ import '../styles/create-topic.css';
 export default function CreateTopic({ onCreated }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [msg, setMsg] = useState('');
   const [error, setError] = useState('');
   const user = getSessionUser();
 
@@ -21,10 +20,6 @@ export default function CreateTopic({ onCreated }) {
     }
     const res = await createTopic(title, user.username, description);
     if (res.success) {
-      setMsg('Тема создана');
-      setTitle('');
-      setDescription('');
-      setError('');
       onCreated && onCreated(res.id); // Передаем id созданной темы
     }
   };
@@ -53,8 +48,6 @@ export default function CreateTopic({ onCreated }) {
         onClick={handleCreate}
       >Создать</button>
       {error && <div className="create-topic-msg">{error}</div>}
-      {msg && <div className="create-topic-msg" style={{color:'#43a047'}}>{msg}</div>}
-*** End Patch
     </div>
   );
 }
