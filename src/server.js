@@ -1,37 +1,3 @@
-// Удалить обсуждение (admin)
-export function deleteTopic(id) {
-  return withDelay((() => {
-    const topics = getData(STORAGE_KEYS.TOPICS);
-    const idx = topics.findIndex(t => t.id === id);
-    if (idx === -1) return { error: 'Тема не найдена' };
-    topics.splice(idx, 1);
-    setData(STORAGE_KEYS.TOPICS, topics);
-    // Также удалить все сообщения этой темы
-    const messages = getData(STORAGE_KEYS.MESSAGES).filter(m => m.topicId !== id);
-    setData(STORAGE_KEYS.MESSAGES, messages);
-    return { success: true };
-  })());
-}
-// Редактировать текст сообщения (admin)
-export function editMessage(id, newText) {
-  return withDelay((() => {
-    const messages = getData(STORAGE_KEYS.MESSAGES);
-    const msg = messages.find(m => m.id === id);
-    if (msg) msg.text = newText;
-    setData(STORAGE_KEYS.MESSAGES, messages);
-    return { success: true };
-  })());
-}
-// Показать скрытое сообщение (admin)
-export function showMessage(id) {
-  return withDelay((() => {
-    const messages = getData(STORAGE_KEYS.MESSAGES);
-    const msg = messages.find(m => m.id === id);
-    if (msg) msg.hidden = false;
-    setData(STORAGE_KEYS.MESSAGES, messages);
-    return { success: true };
-  })());
-}
 // Simulated server API using localStorage
 
 import { initialUsers } from './data/initialUsers';
@@ -44,8 +10,44 @@ const STORAGE_KEYS = {
   SESSION: 'forum_session',
 };
 
+// Удалить обсуждение (admin)
+export function deleteTopic(id) {
+  return withDelay((() => {
+    const topics = getData(STORAGE_KEYS.TOPICS);
+    const idx = topics.findIndex(t => t.id === id);
+    if (idx === -1) return { error: 'Тема не найдена' };
+    topics.splice(idx, 1);
+    setData(STORAGE_KEYS.TOPICS, topics);
+    // Также удаляем все сообщения этой темы
+    const messages = getData(STORAGE_KEYS.MESSAGES).filter(m => m.topicId !== id);
+    setData(STORAGE_KEYS.MESSAGES, messages);
+    return { success: true };
+  })());
+}
 
-// Ensure all initial users (e.g., admin) are present in localStorage
+// Редактировать текст сообщения (admin)
+export function editMessage(id, newText) {
+  return withDelay((() => {
+    const messages = getData(STORAGE_KEYS.MESSAGES);
+    const msg = messages.find(m => m.id === id);
+    if (msg) msg.text = newText;
+    setData(STORAGE_KEYS.MESSAGES, messages);
+    return { success: true };
+  })());
+}
+
+// Показать скрытое сообщение (admin)
+export function showMessage(id) {
+  return withDelay((() => {
+    const messages = getData(STORAGE_KEYS.MESSAGES);
+    const msg = messages.find(m => m.id === id);
+    if (msg) msg.hidden = false;
+    setData(STORAGE_KEYS.MESSAGES, messages);
+    return { success: true };
+  })());
+}
+
+// Записываем заранее некоторых полозователей
 const existingUsers = JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
 let changed = false;
 initialUsers.forEach(initUser => {
@@ -92,6 +94,7 @@ export function loginUser(username, password) {
     return { success: true, user };
   })());
 }
+
 export function logoutUser() {
   return withDelay((() => {
     const user = getSessionUser();
@@ -100,9 +103,11 @@ export function logoutUser() {
     return { success: true };
   })());
 }
+
 export function getSessionUser() {
   return withDelay(JSON.parse(localStorage.getItem(STORAGE_KEYS.SESSION) || 'null'));
 }
+
 export function changeUserCredentials(username, newUsername, newPassword) {
   return withDelay((() => {
     const users = getData(STORAGE_KEYS.USERS);
@@ -130,15 +135,18 @@ export function createTopic(title, creator, description = '') {
     return { success: true, id };
   })());
 }
+
 export function getTopics() {
   return withDelay(getData(STORAGE_KEYS.TOPICS).filter(t => !t.hidden));
 }
+
 export function getRandomTopics(count = 3) {
   return withDelay((() => {
     const topics = getData(STORAGE_KEYS.TOPICS).filter(t => !t.hidden);
     return topics.sort(() => 0.5 - Math.random()).slice(0, count);
   })());
 }
+
 export function hideTopic(id) {
   return withDelay((() => {
     const topics = getData(STORAGE_KEYS.TOPICS);
@@ -161,6 +169,7 @@ export function addMessage(topicId, author, text) {
     return { success: true, id };
   })());
 }
+
 // getMessages теперь принимает user (или isAdmin) и возвращает скрытые сообщения для админа
 export function getMessages(topicId, filter = '', user = null) {
   return withDelay((() => {
@@ -172,6 +181,7 @@ export function getMessages(topicId, filter = '', user = null) {
     return messages;
   })());
 }
+
 export function hideMessage(id) {
   return withDelay((() => {
     const messages = getData(STORAGE_KEYS.MESSAGES);
@@ -188,6 +198,7 @@ export function logAction(username, action, details = {}) {
   logs.push({ username, action, details, time: new Date().toISOString() });
   setData(STORAGE_KEYS.LOGS, logs);
 }
+
 export function getLogs(username = null) {
   return withDelay((() => {
     const logs = getData(STORAGE_KEYS.LOGS);
@@ -195,7 +206,4 @@ export function getLogs(username = null) {
   })());
 }
 
-// Utility
-export function isAdmin(user) {
-  return user && user.isAdmin;
-}
+export function isAdmin(user) { return user && user.isAdmin; }

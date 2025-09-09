@@ -43,7 +43,7 @@ export default function App() {
 
   if (loadingUser) {
     return (
-      <div style={{display:'flex', minHeight:'100vh', alignItems:'center', justifyContent:'center', background:'#23272f'}}>
+      <div style={{display:'flex', height:'100%', alignItems:'center', justifyContent:'center'}}>
         <div style={{color:'gray', fontSize:'1.2em'}}>Загрузка...</div>
       </div>
     );
@@ -51,44 +51,27 @@ export default function App() {
 
   return (
     <div style={{display:'flex', minHeight:'100vh'}}>
-      <aside style={{width: '220px', background:'#343541', padding: '2em 1em', display:'flex', flexDirection:'column', alignItems:'flex-start', borderRight:'1px solid #444654'}}>
+      <aside style={{width: '220px', background:'#343541', padding: '2em 1em', flexDirection:'column', borderRight:'1px solid #444654'}}>
         <h1 style={{fontSize:'1.5em', marginBottom:'2em', color:'#ececf1'}}>Forum</h1>
         {user ? (
           <nav style={{display:'flex', flexDirection:'column', gap:'1em', width:'100%', height:'100%', minHeight: '60vh', position:'relative'}}>
             <div style={{display:'flex', flexDirection:'column', gap:'1em'}}>
-              <button onClick={() => setPage('topics')}>Обсуждения</button>
-              <button onClick={() => setPage('createTopic')}>Создать тему</button>
+              <button onClick={() => setPage('topics')} className='nav'>Обсуждения</button>
+              <button onClick={() => setPage('createTopic')} className='nav'>Создать тему</button>
               {isAdmin(user) && <>
-                {/* <button onClick={() => setPage('users')}>Пользователи</button> */}
-                <button onClick={() => setPage('actions')}>Активность пользователей</button>
-                <button onClick={() => setPage('adminPanel')}>Админ-панель</button>
+                <button onClick={() => setPage('actions')} className='nav'>Активность пользователей</button>
+                <button onClick={() => setPage('adminPanel')} className='nav'>Админ-панель</button>
               </>}
             </div>
-            <button onClick={handleLogout} style={{
-              background:'#e53935',
-              color:'#fff',
-              border:'none',
-              borderRadius:8,
-              padding:'12px 32px',
-              fontWeight:600,
-              fontSize:'1em',
-              cursor:'pointer',
-              minHeight:40,
-              transition:'background 0.2s',
-              position:'absolute',
-              left:0,
-              right:0,
-              bottom:0,
-              margin:'1em 0',
-            }}
+            <button onClick={handleLogout} className='nav' style={{ background:'#e53935', color:'white' }}
             onMouseEnter={e => e.currentTarget.style.background = '#b71c1c'}
             onMouseLeave={e => e.currentTarget.style.background = '#e53935'}
             >Выйти</button>
           </nav>
         ) : (
           <nav style={{display:'flex', flexDirection:'column', gap:'1em', width:'100%'}}>
-            <button onClick={() => setPage('login')}>Вход</button>
-            <button onClick={() => setPage('register')}>Регистрация</button>
+            <button onClick={() => setPage('login')} className='nav'>Вход</button>
+            <button onClick={() => setPage('register')} className='nav'>Регистрация</button>
           </nav>
         )}
       </aside>
