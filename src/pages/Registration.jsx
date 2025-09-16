@@ -27,8 +27,8 @@ export default function Registration({ onRegistered }) {
   };
 
   return (
-    <div style={{maxWidth:400, margin:'0 auto', padding:'1% 0'}}>
-      <h2 style={{textAlign:'center', marginBottom:18}}>Регистрация</h2>
+    <div className='login-registrarion-container'>
+      <h2 className='login-registrarion-header'>Регистрация</h2>
       <form onSubmit={handleRegister}>
         <input
           placeholder="Имя пользователя"
@@ -45,8 +45,8 @@ export default function Registration({ onRegistered }) {
         />
         <button type="submit" disabled={loading} class="submit">Зарегистрироваться</button>
       </form>
-      {loading && <div style={{color:'gray', marginTop:8}}>Загрузка...</div>}
-      {error && <div style={{color:'red', marginTop:8}}>{error}</div>}
+      {loading && <div>Загрузка...</div>}
+      {error && <div>{error}</div>}
     </div>
   );
 }

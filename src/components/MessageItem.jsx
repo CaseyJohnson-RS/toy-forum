@@ -22,7 +22,7 @@ export default function MessageItem({ m, isOwn, isHidden, user, appliedFilter, l
         <div className={`forum-author${isOwn ? ' own' : ''}`}>{m.author}</div>
         <div className="forum-text">
           {editing
-            ? <textarea value={editText} onChange={e => setEditText(e.target.value)} style={{width:'100%', minHeight:40, borderRadius:6, border:'1px solid #888', padding:'6px', fontSize:'1em'}} />
+            ? <textarea value={editText} onChange={e => setEditText(e.target.value)} />
             : (typeof window !== 'undefined' && window.highlightMatch ? window.highlightMatch(m.text, appliedFilter) : m.text)
           }
         </div>

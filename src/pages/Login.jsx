@@ -23,14 +23,15 @@ export default function Login({ onLoggedIn }) {
   };
 
   return (
-    <div style={{maxWidth:400, margin:'0 auto', padding:'1% 0'}}>
-      <h2 style={{textAlign:'center', marginBottom:'18px'}}>Вход</h2>
+    <div className='login-registrarion-container'>
+      <h2 className='login-registrarion-header'>Вход</h2>
       <form onSubmit={handleLogin}>
         <input
           placeholder="Имя пользователя"
           value={username}
           onChange={e => setUsername(e.target.value)}
           disabled={loading}
+          type='text'
           
         />
         <input
@@ -42,8 +43,8 @@ export default function Login({ onLoggedIn }) {
         />
         <button type="submit" disabled={loading} class="submit">Войти</button>
       </form>
-      {loading && <div style={{color:'gray', marginTop:8}}>Загрузка...</div>}
-      {error && <div style={{color:'red', marginTop:8}}>{error}</div>}
+      {loading && <div>Загрузка...</div>}
+      {error && <div>{error}</div>}
     </div>
   );
 }

@@ -33,6 +33,29 @@ export default function UserActions() {
     }
   }, [userFilter]);
 
+  const exportToXML = () => {
+    const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<logs>\n` +
+      logs.map(l =>
+        `  <log>\n` +
+        `    <time>${l.time}</time>\n` +
+        `    <username>${l.username}</username>\n` +
+        `    <action>${l.action}</action>\n` +
+        `  </log>`
+      ).join('\n') +
+      `\n</logs>`;
+    const blob = new Blob([xml], {type: 'application/xml'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'logs.xml';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }, 0);
+  };
+
   return (
     <div className="user-actions-container">
       <h2 className="user-actions-title">Активность пользователей</h2>
@@ -63,28 +86,7 @@ export default function UserActions() {
             <div style={{flex:1}}></div>
             <button
               className="user-actions-btn export"
-              onClick={() => {
-                const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<logs>\n` +
-                  logs.map(l =>
-                    `  <log>\n` +
-                    `    <time>${l.time}</time>\n` +
-                    `    <username>${l.username}</username>\n` +
-                    `    <action>${l.action}</action>\n` +
-                    `  </log>`
-                  ).join('\n') +
-                  `\n</logs>`;
-                const blob = new Blob([xml], {type: 'application/xml'});
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'logs.xml';
-                document.body.appendChild(a);
-                a.click();
-                setTimeout(() => {
-                  document.body.removeChild(a);
-                  URL.revokeObjectURL(url);
-                }, 0);
-              }}
+              onClick={() => { exportToXML(); }}
             >Выгрузить в XML</button>
             {showAutocomplete && userFilterInput && users.filter(u => u.username.toLowerCase().includes(userFilterInput.toLowerCase())).length > 0 && (
               <div className="user-actions-autocomplete">

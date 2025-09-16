@@ -10,6 +10,31 @@ const STORAGE_KEYS = {
   SESSION: 'forum_session',
 };
 
+function getData(key) {
+  return JSON.parse(localStorage.getItem(key) || '[]');
+}
+function setData(key, data) {
+  localStorage.setItem(key, JSON.stringify(data));
+}
+
+// Имитация задержки ответа сервера
+function withDelay(result, ms = 250) {
+  return new Promise(resolve => setTimeout(() => resolve(result), ms));
+}
+
+// Записываем заранее некоторых полозователей
+const existingUsers = JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
+let changed = false;
+initialUsers.forEach(initUser => {
+  if (!existingUsers.find(u => u.username === initUser.username)) {
+    existingUsers.push(initUser);
+    changed = true;
+  }
+});
+if (changed) {
+  localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(existingUsers));
+}
+
 // Удалить обсуждение (admin)
 export function deleteTopic(id) {
   return withDelay((() => {
@@ -47,31 +72,6 @@ export function showMessage(id) {
   })());
 }
 
-// Записываем заранее некоторых полозователей
-const existingUsers = JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
-let changed = false;
-initialUsers.forEach(initUser => {
-  if (!existingUsers.find(u => u.username === initUser.username)) {
-    existingUsers.push(initUser);
-    changed = true;
-  }
-});
-if (changed) {
-  localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(existingUsers));
-}
-
-function getData(key) {
-  return JSON.parse(localStorage.getItem(key) || '[]');
-}
-function setData(key, data) {
-  localStorage.setItem(key, JSON.stringify(data));
-}
-
-
-// Имитация задержки ответа сервера
-function withDelay(result, ms = 250) {
-  return new Promise(resolve => setTimeout(() => resolve(result), ms));
-}
 
 // User API
 export function registerUser(username, password, isAdmin = false) {
@@ -84,6 +84,7 @@ export function registerUser(username, password, isAdmin = false) {
     return { success: true };
   })());
 }
+
 export function loginUser(username, password) {
   return withDelay((() => {
     const users = getData(STORAGE_KEYS.USERS);
@@ -120,6 +121,7 @@ export function changeUserCredentials(username, newUsername, newPassword) {
     return { success: true };
   })());
 }
+
 export function getAllUsers() {
   return withDelay(getData(STORAGE_KEYS.USERS));
 }
@@ -138,13 +140,6 @@ export function createTopic(title, creator, description = '') {
 
 export function getTopics() {
   return withDelay(getData(STORAGE_KEYS.TOPICS).filter(t => !t.hidden));
-}
-
-export function getRandomTopics(count = 3) {
-  return withDelay((() => {
-    const topics = getData(STORAGE_KEYS.TOPICS).filter(t => !t.hidden);
-    return topics.sort(() => 0.5 - Math.random()).slice(0, count);
-  })());
 }
 
 export function hideTopic(id) {

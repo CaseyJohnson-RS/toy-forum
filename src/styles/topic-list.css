@@ -1,0 +1,47 @@
+
+h2  {
+    text-align: center;
+}
+
+.search-bar {
+    display: block;
+    margin: auto 5%;
+}
+
+.loading {
+    color: gray;
+    display: block;
+    text-align: center;
+    margin: 5%;
+}
+
+.error {
+    color: red;
+    display: block;
+    text-align: center;
+    margin: 5%;
+}
+
+.topic-item {
+    padding: 10px;
+    border-bottom: 1px solid #454755ff;
+    display: block;
+    min-height: 48px;
+}
+
+.topic-item > div {
+    display: flex;
+    align-items: center;
+}
+
+.topic-item > div > div {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.topic-item > span {
+    color: grey;
+    margin-left: 8px;
+    font-size: 0.9em;
+}

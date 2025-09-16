@@ -1,151 +1,3 @@
-/* Скрыть скроллбар только для области сообщений (ul) */
-.hide-scrollbar-forum::-webkit-scrollbar {
-  width: 0 !important;
-  height: 0 !important;
-  display: none !important;
-  background: transparent !important;
-}
-.hide-scrollbar-forum {
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE 10+ */
-}
-.hide-scrollbar {
-  scrollbar-width: none !important; /* Firefox */
-  -ms-overflow-style: none !important; /* IE 10+ */
-}
-.hide-scrollbar::-webkit-scrollbar {
-  width: 0 !important;
-  height: 0 !important;
-  display: none !important;
-  background: transparent !important;
-}
-.hide-scrollbar::-webkit-scrollbar-thumb {
-  background: transparent !important;
-}
-.hide-scrollbar::-webkit-scrollbar-track {
-  background: transparent !important;
-}
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-}
-/* Скрыть полосу прокрутки для textarea с классом hide-scrollbar */
-.hide-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.hide-scrollbar {
-  scrollbar-width: none; /* Firefox */
-  -ms-overflow-style: none; /* IE 10+ */
-}
-/* Кастомная полоса прокрутки для всех элементов */
-::-webkit-scrollbar {
-  width: 12px;
-  background: #23272f;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(135deg, #444654 60%, #343541 100%);
-  border-radius: 8px;
-  border: 2px solid #23272f;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(135deg, #4f8cff 60%, #6ec6ff 100%);
-}
-::-webkit-scrollbar-corner {
-  background: #23272f;
-}
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
-}
-
-body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Inter', 'Segoe UI', 'Arial', sans-serif;
-  background: #23272f;
-  color: #ececf1;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-h1 {
-  font-size: 2.2em;
-  font-weight: 700;
-  margin-bottom: 0.5em;
-  color: #ececf1;
-}
-
-header {
-  background: #343541;
-  padding: 1em 0.5em;
-  border-bottom: 1px solid #444654;
-  margin-bottom: 1em;
-}
-
-nav {
-  display: flex;
-  gap: 0.5em;
-  margin-top: 0.5em;
-}
-
-main {
-  background: none;
-  border-radius: 0;
-  box-shadow: none;
-  padding: 0;
-  margin: 0;
-  display: block;
-}
-
-input, textarea {
-  background: #40414f;
-  color: #ececf1;
-  border: 1px solid #444654;
-  border-radius: 8px;
-  padding: 0.7em 1em;
-  margin-bottom: 0.7em;
-  font-size: 1em;
-  width: 100%;
-  box-sizing: border-box;
-}
-
-button {
-  border-radius: 8px;
-  border: none;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  background: #444654;
-  color: #ececf1;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-button:hover {
-  background: #565869;
-}
-
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-li {
-  background: #40414f;
-  margin-bottom: 0.5em;
-  padding: 0.7em 1em;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
 
 .error {
   color: #fa5252;
@@ -155,4 +7,72 @@ li {
 .success {
   color: #22c55e;
   margin-top: 0.5em;
+}
+
+
+.loading-screen {
+  display:flex; 
+  height:100%;
+  align-items:center;
+  justify-content:center;
+}
+
+.app-containter {
+  display:flex; 
+  min-height:100vh;
+}
+
+aside {
+  width: 220px; 
+  background:#343541; 
+  padding: 2em 1em; 
+  flex-direction:column; 
+  border-right:1px solid #444654;
+}
+
+aside h1 {
+  font-size:1.5em; 
+  margin-bottom:2em; 
+  color:#ececf1;
+}
+
+aside nav {
+  display:flex; 
+  flex-direction:column; 
+  gap:1em; 
+  width:100%; 
+  height:100%; 
+  min-height: 60vh; 
+  position:relative;
+}
+
+.nav-group {
+  display:flex; 
+  flex-direction:column; 
+  gap:1em;
+}
+
+.logout-button {
+  background:#e53935; 
+  color:white; 
+}
+
+.logout-button:hover {
+  background:#b71c1c; 
+}
+
+main {
+  flex:1; 
+  display:flex; 
+  justify-content:center; 
+  align-items:center; 
+  background:#23272f;
+}
+
+.content-area {
+  width:100%; 
+  max-width:1100px; 
+  min-width:350px; 
+  padding:2vw 2vw; 
+  box-sizing:border-box;
 }

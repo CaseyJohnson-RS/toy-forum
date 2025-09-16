@@ -1,5 +1,6 @@
 import  { useState, useEffect } from 'react';
-import { getTopics, getRandomTopics, getMessages } from '../server';
+import { getTopics, getMessages } from '../server';
+import '../styles/topic-list.css';
 
 export default function TopicList({ onSelectTopic }) {
   const [topics, setTopics] = useState([]);
@@ -47,8 +48,8 @@ export default function TopicList({ onSelectTopic }) {
   return (
     <>
       <div>
-        <h2 style={{textAlign:'center'}}>Поиск обсуждений</h2>
-        <div style={{display:'block', margin: 'auto 5%'}}>
+        <h2>Поиск обсуждений</h2>
+        <div class='search-bar'>
           <input
             placeholder="Запрос"
             value={search}
@@ -57,18 +58,18 @@ export default function TopicList({ onSelectTopic }) {
           />
         </div>
       </div>
-      {loading && <div style={{color:'gray', display:'block', textAlign:'center', margin: '5%'}}>Загрузка...</div>}
-      {error && <div style={{color:'red', display:'block', textAlign:'center', margin: '5%'}}>{error}</div>}
+      {loading && <div class='loading'>Загрузка...</div>}
+      {error && <div class='error'>{error}</div>}
       {!loading && (
         <ul class='topic-list'>
           {displayTopics.map(t => (
-            <li key={t.id} style={{padding:'10px', borderBottom:'1px solid #454755ff', display:'block', minHeight: 48}}>
-              <div style={{display:'flex', alignItems:'center'}}>
-                <div style={{display:'flex', flexDirection:'column', flex:1}}>
+            <li key={t.id} className='topic-item'>
+              <div>
+                <div>
                   <button onClick={() => onSelectTopic(t.id)} disabled={loading} class='topic-header'>{t.title}</button>
-                  {t.description && <span style={{color:'grey', fontSize:'0.9em', fontStyle:'italic'}}>{t.description}</span>}
+                  {t.description && <span >{t.description}</span>}
                 </div>
-                <span style={{color:'grey', marginLeft:8, fontSize:'0.9em'}}>{messagesCount[t.id] ?? '...'} сообщений</span>
+                <span>{messagesCount[t.id] ?? '...'} сообщений</span>
               </div>
             </li>
           ))}

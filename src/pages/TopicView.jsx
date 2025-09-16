@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { getMessages, addMessage, getSessionUser, hideMessage, showMessage, isAdmin, editMessage, deleteTopic } from '../server';
 import MessageItem from '../components/MessageItem';
 import TopicHeader from '../components/TopicHeader';
+import '../styles/topic-list.css';
 
 import { getTopics } from '../server';
 
@@ -92,12 +93,6 @@ export default function TopicView({ topicId, onTopicDeleted }) {
     await loadMessages(topicId, filter);
   };
 
-  const handleResetFilter = async () => {
-    setFilter('');
-    setAppliedFilter('');
-    await loadMessages(topicId, '');
-  };
-
   const handleHide = async id => {
     setLoading(true);
     try {
@@ -138,47 +133,30 @@ export default function TopicView({ topicId, onTopicDeleted }) {
     }
   };
 
-  // Функция для подсветки совпадений
-  function highlightMatch(text, filter) {
-    if (!filter) return text;
-    try {
-      const regex = new RegExp(`(${filter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
-      const parts = text.split(regex);
-      return parts.map((part, i) =>
-        regex.test(part) ? <mark key={i} style={{background:'#ffe066', color:'#222'}}>{part}</mark> : part
-      );
-    } catch {
-      return text;
-    }
-  }
-
   return (
-    <div style={{position:'relative'}}>
+    <div >
       {/* Кнопка удаления администратора (лол тип)*/}
       {user && isAdmin(user) && (
         <button
           onClick={handleDeleteTopic}
           disabled={deleting}
-          style={{ background:'#853231' }}
+          className='delete'
         >
           Удалить обсуждение
         </button>
       )}
   <TopicHeader title={topicTitle} description={topicDescription} count={messages.length} />
-      <form onSubmit={handleApplyFilter} style={{
-        display:'flex', gap:8, alignItems:'center', marginBottom:16, justifyContent:'center', width:'100%'}}>
+      <form onSubmit={handleApplyFilter} >
         <input
           placeholder="Фильтр сообщений"
           value={filter}
           onChange={e => setFilter(e.target.value)}
           disabled={loading}
         />
-        <button type="submit" disabled={loading || (!filter && !appliedFilter)} class='submit'>Найти</button>
-        <button type="button" onClick={handleResetFilter} disabled={loading || (!filter && !appliedFilter)} >Сбросить</button>
       </form>
-      {loading && <div style={{color:'gray'}}>Загрузка...</div>}
-      {error && <div style={{color:'red'}}>{error}</div>}
-      <div style={{justifyContent:'center', width:'100%'}}>
+      {loading && <div>Загрузка...</div>}
+      {error && <div>{error}</div>}
+      <div className="messages-container">
         <ul
           ref={messagesListRef}
           class='message-list hide-scrollbar-forum'
@@ -211,9 +189,7 @@ export default function TopicView({ topicId, onTopicDeleted }) {
             onClick={() => {
               messagesListRef.current.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            style={{
-              position:'absolute', left:-30, top:250, background:'#40414aff', color:'white', borderRadius:'20%', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.5em',
-            }}
+            className="scroll-button up"
             aria-label="Прокрутить вверх"
           >↑</button>
         )}
@@ -223,14 +199,12 @@ export default function TopicView({ topicId, onTopicDeleted }) {
               const el = messagesListRef.current;
               el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' });
             }}
-            style={{
-              position:'absolute', left:-30, bottom:100, background:'#40414aff', color:'white', borderRadius:'20%', cursor:'pointer', display:'flex', alignItems:'center', justifyContent:'center', fontSize:'1.5em',
-            }}
+            className="scroll-button down"
             aria-label="Прокрутить вниз"
           >↓</button>
         )}
       </div>
-      <div style={{display:'flex', gap:8, alignItems:'center', marginTop:16, width:'100%', justifyContent:'center'}}>
+      <div className="message-input-container">
         <textarea
           ref={textareaRef}
           value={text}

@@ -4,5 +4,5 @@ export const initialUsers = [
     username: 'CaseyJohnson',
     password: 'songoftheend',
     isAdmin: true
-  }
+  } 
 ];

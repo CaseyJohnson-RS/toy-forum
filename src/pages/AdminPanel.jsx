@@ -16,13 +16,17 @@ export default function AdminPanel() {
     getAllUsers().then(u => setUsers(u));
   }, []);
 
-  const handleChangePass = async () => {
+  const handleChangePass = async () => {   
     if (!selected || !password) {
       setMsg('Выберите пользователя и введите новый пароль');
       return;
     }
     if (!users.find(u => u.username === selected)) {
       setMsg('Пользователь не найден');
+      return;
+    }
+    if (password.length < 6) {
+      setMsg('Пароль должен содержать не менее 6 символов');
       return;
     }
     setLoading(true);

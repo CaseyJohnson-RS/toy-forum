@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Registration from './pages/Registration';
 import Login from './pages/Login';
 import TopicList from './pages/TopicList';
@@ -8,6 +8,7 @@ import UserActions from './pages/UserActions';
 import AdminPanel from './pages/AdminPanel';
 import CreateTopic from './pages/CreateTopic';
 import { getSessionUser, logoutUser, isAdmin } from './server';
+import './App.css';
 
 
 export default function App() {
@@ -43,19 +44,19 @@ export default function App() {
 
   if (loadingUser) {
     return (
-      <div style={{display:'flex', height:'100%', alignItems:'center', justifyContent:'center'}}>
-        <div style={{color:'gray', fontSize:'1.2em'}}>Загрузка...</div>
+      <div className='loading-screen'>
+        <div>Загрузка...</div>
       </div>
     );
   }
 
   return (
-    <div style={{display:'flex', minHeight:'100vh'}}>
-      <aside style={{width: '220px', background:'#343541', padding: '2em 1em', flexDirection:'column', borderRight:'1px solid #444654'}}>
-        <h1 style={{fontSize:'1.5em', marginBottom:'2em', color:'#ececf1'}}>Forum</h1>
+    <div className='app-containter'>
+      <aside>
+        <h1>Forum</h1>
         {user ? (
-          <nav style={{display:'flex', flexDirection:'column', gap:'1em', width:'100%', height:'100%', minHeight: '60vh', position:'relative'}}>
-            <div style={{display:'flex', flexDirection:'column', gap:'1em'}}>
+          <nav>
+            <div className='nav-group'>
               <button onClick={() => setPage('topics')} className='nav'>Обсуждения</button>
               <button onClick={() => setPage('createTopic')} className='nav'>Создать тему</button>
               {isAdmin(user) && <>
@@ -63,20 +64,19 @@ export default function App() {
                 <button onClick={() => setPage('adminPanel')} className='nav'>Админ-панель</button>
               </>}
             </div>
-            <button onClick={handleLogout} className='nav' style={{ background:'#e53935', color:'white' }}
-            onMouseEnter={e => e.currentTarget.style.background = '#b71c1c'}
-            onMouseLeave={e => e.currentTarget.style.background = '#e53935'}
+            <button onClick={handleLogout} className='nav logout-button'
+            
             >Выйти</button>
           </nav>
         ) : (
-          <nav style={{display:'flex', flexDirection:'column', gap:'1em', width:'100%'}}>
+          <nav>
             <button onClick={() => setPage('login')} className='nav'>Вход</button>
             <button onClick={() => setPage('register')} className='nav'>Регистрация</button>
           </nav>
         )}
       </aside>
-      <main style={{flex:1, display:'flex', justifyContent:'center', alignItems:'center', background:'#23272f'}}>
-        <div style={{width:'100%', maxWidth:'1100px', minWidth:'350px', padding:'2vw 2vw', boxSizing:'border-box'}}>
+      <main >
+        <div className='content-area'>
           {!user && page === 'login' && <Login onLoggedIn={handleLogin} />}
           {!user && page === 'register' && <Registration onRegistered={handleRegistered} />}
           {user && page === 'topics' && <TopicList onSelectTopic={handleSelectTopic} />}
